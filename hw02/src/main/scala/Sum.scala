@@ -4,7 +4,7 @@
 // sum(4) = 2 + 4 + 8 + 16 = 2*(1 + (2 + 4 + 8))
 object Sum {
   def sum(n : Int):Int = {
-     if(n==0) 1
-     else 2 * (sum(n-1))
+     if(n==0) 0
+     else 2 * (1 + sum(n-1))
   }
 }
