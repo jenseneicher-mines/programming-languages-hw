@@ -14,4 +14,33 @@ class PatternMatchingTest extends FlatSpec {
   it should "return the proper tree-traversal order (Post-Order)" in {
     assert(PatternMatching.traverse2Post(PatternMatching.myTree) === List(1,3,2,5,4))
   }
+
+  it should "return the proper tree-traversal order (Post-Order)" in {
+    assert(PatternMatching.traverse2Post(PatternMatching.myTree) === List(1,3,2,5,4))
+  }
+
+  it should "return the proper tree-traversal order (Post-Order)" in {
+    assert(PatternMatching.traverse2Post(PatternMatching.myTree) === List(1,3,2,5,4))
+  }
+
+  it should "return the proper tree-traversal order (Post-Order)" in {
+    assert(PatternMatching.traverse2Post(PatternMatching.myTree) === List(1,3,2,5,4))
+  }
+
+  it should "return the proper tree-traversal order (Post-Order)" in {
+    assert(PatternMatching.traverse2Post(PatternMatching.myTree) === List(1,3,2,5,4))
+  }
+
+  it should "return the proper tree-traversal order (Post-Order)" in {
+    assert(PatternMatching.traverse2Post(PatternMatching.myTree) === List(1,3,2,5,4))
+  }
+
+  it should "return the proper tree-traversal order (Post-Order)" in {
+    assert(PatternMatching.traverse2Post(PatternMatching.myTree) === List(1,3,2,5,4))
+  }
+
 }
+  
+  
+    
+  

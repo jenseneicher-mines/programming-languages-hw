@@ -58,5 +58,13 @@ object PatternMatching {
    */
 
   val myTree = Node(Node(Leaf(1),2,Leaf(3)),4,Leaf(5))
+  val myTree2 = Node(Leaf(3),4,Leaf(5))
+  val myTree3 = Node(Node(Node(Leaf(10),15,Leaf(0)),2,Leaf(3)),4,Leaf(5))
+  val myTree4 = Node(Leaf(0), 1, Leaf(0))
+  val myTree5 = Node(Leaf(4),10,Node(Node(Leaf(11),15,Leaf(8)),3,Leaf(9)))
+  val myTree6 = Node(Node(Node(Node(Leaf(2),1,Leaf(3)),2,Leaf(4)),5,Leaf(6)),7,Leaf(8))
+
   val v = traverse2(myTree) // should produce the value List(1, 2, 3, 4, 5)
+  val v2 = traverse2Pre(myTree) // should produce the new value List()
+  val v3 = traverse2Post(myTree) // should produce the new value List()
 }
