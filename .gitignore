@@ -1,5 +1,7 @@
 hw02/project/
 hw02/target/
+hw03/project/
+hw03/target/
   
 *.class
 *.log
