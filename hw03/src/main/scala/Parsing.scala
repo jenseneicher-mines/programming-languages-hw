@@ -158,8 +158,12 @@ object Parsing {
     }
   }
 
-  def parseUnaryOp(l : List[Token]) : (Option[Uop],List[Token]) = {
-    (None,l) // <-- TODO
+  def parseUnaryOp(l : List[Token]) : (Option[Uop],List[Token]) = { 
+    l match {
+      case OpToken("!")::more => (Some(NotUop),more)
+        case OpToken("-")::more => (Some(NegUop),more)
+            case _ => (None,l)
+  }
   }
 
   def parseConst(l : List[Token]) : (Option[Expr],List[Token]) = {

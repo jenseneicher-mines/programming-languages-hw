@@ -10,6 +10,12 @@ class ParsingTest extends FlatSpec {
     assert(Parsing.lexer("\"string\"".toList) === List(StrToken("string")))
     assert(Parsing.lexer("\"string\"\"two\"".toList) === List(StrToken("string"), StrToken("two")))
     assert(Parsing.lexer("".toList) === List())
+
+    assert(Parsing.lexer("false".toList) === List(KeywordToken("false")))
+    assert(Parsing.lexer("2 / 4".toList) === List(NumToken("2"), OpToken("/"), NumToken("4")))
+    assert(Parsing.lexer("garbage".toList) === List())
+    assert(Parsing.lexer("5 * 2 + 6 / 2".toList) == List(NumToken("5"), OpToken("*"), NumToken("2"), OpToken("+"), NumToken("6"), OpToken("/"), NumToken("2")))
+    assert(Parsing.lexer("\"String\" + 2".toList) === List(StrToken("String"), OpToken("+"), NumToken("2")))
   }
 
   "Parser" should "properly evaluate simple strings" in {
