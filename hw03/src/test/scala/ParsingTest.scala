@@ -21,4 +21,8 @@ class ParsingTest extends FlatSpec {
   "Parser" should "properly evaluate simple strings" in {
     assert(Parsing.parser(Parsing.lexer("1 + 2 + 3 * 5 + 6".toList)) === (Some(BopExpr(ConstIntExpr(1),PlusBop,BopExpr(ConstIntExpr(2),PlusBop,BopExpr(BopExpr(ConstIntExpr(3),TimesBop,ConstIntExpr(5)),PlusBop,ConstIntExpr(6))))),List()))
   }
+
+  "Parser" should "properly evaluate simple strings with a double" in {
+    assert(Parsing.parser(Parsing.lexer("1 + 4.16 + 3 * 5".toList)) === (Some(BopExpr(ConstIntExpr(1),PlusBop,BopExpr(ConstFloatExpr(4.16f),PlusBop,BopExpr(ConstIntExpr(3),TimesBop,ConstIntExpr(5))))),List()))
+  }
 }

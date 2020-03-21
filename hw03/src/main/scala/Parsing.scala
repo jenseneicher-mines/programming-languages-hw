@@ -127,8 +127,11 @@ object Parsing {
     }
   }
 
-  def parseTimesExpr(l : List[Token]) : (Option[Expr],List[Token]) = {
-    (None,l) // <-- TODO
+  def parseTimesExpr(l : List[Token]) : (Option[Expr],List[Token]) = { 
+    parseTimesExpr1(l) match {
+      case (Some(e),l2) => (Some(e),l2)
+        case _ => parseUnaryExpr(l)
+    }
   }
 
   def parseTimesExpr1(l : List[Token]) : (Option[Expr],List[Token]) = {
@@ -144,8 +147,11 @@ object Parsing {
     }
   }
 
-  def parseUnaryExpr(l : List[Token]) : (Option[Expr],List[Token]) = {
-    (None,l) // <-- TODO
+  def parseUnaryExpr(l : List[Token]) : (Option[Expr],List[Token]) = { 
+    parseUnaryExpr1(l) match {
+      case (Some(e),l2) => (Some(e),l2)
+      case _ => parseConst(l)
+    }
   }
 
   def parseUnaryExpr1(l : List[Token]) : (Option[Expr],List[Token]) = {
