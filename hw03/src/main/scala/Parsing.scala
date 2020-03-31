@@ -35,6 +35,13 @@ object Parsing {
   case class NumToken(s : String) extends Token
   case class StrToken(s : String) extends Token
 
+  def fold(str:List[Char], f:(Char) => Boolean) : Boolean = {
+    val result = str.foldLeft(true){
+      case(r,y) => { f(y) && r }
+    }
+    result
+  }
+
   def extract(str:List[Char], f:(Int,Char)=>Boolean) : (List[Char],List[Char]) = {
     val (_,_,s1,s2) = str.foldLeft((0,true,List[Char](),List[Char]())){
       case((count,b,s,rest),y) => {
@@ -86,7 +93,10 @@ object Parsing {
    */
 
   def parser(l : List[Token]) : (Option[Expr], List[Token]) = {
-    parseExpr(l)
+    parseExpr(l) match {
+      case (Some(e), List()) => (Some(e), List())
+        case _ => (None,l)
+    }
   }
 
   def parseExpr(l : List[Token]) : (Option[Expr],List[Token]) = {
@@ -129,7 +139,7 @@ object Parsing {
 
   def parseTimesExpr(l : List[Token]) : (Option[Expr],List[Token]) = { 
     parseTimesExpr1(l) match {
-      case (Some(e),l2) => (Some(e),l2)
+      case (Some(e1),l2) => (Some(e1),l2)
         case _ => parseUnaryExpr(l)
     }
   }
@@ -149,8 +159,8 @@ object Parsing {
 
   def parseUnaryExpr(l : List[Token]) : (Option[Expr],List[Token]) = { 
     parseUnaryExpr1(l) match {
-      case (Some(e),l2) => (Some(e),l2)
-      case _ => parseConst(l)
+      case (Some(e1),l2) => (Some(e1),l2)
+        case _ => parseConst(l)
     }
   }
 
@@ -173,6 +183,13 @@ object Parsing {
   }
 
   def parseConst(l : List[Token]) : (Option[Expr],List[Token]) = {
-    (None,l) // <-- TODO
+    l match{
+        case KeywordToken("true")::more=>(Some(ConstBoolExpr(true)),more)
+         case KeywordToken("false")::more=>(Some(ConstBoolExpr(false)),more)
+          case StrToken(s)::more=>(Some(ConstStringExpr(s)),more)
+           case NumToken(i)::more if fold(i.toList, (d:Char)=>d.isDigit) => (Some(ConstIntExpr(i.toInt)),more)
+           case NumToken(i)::more if fold(i.toList, (d:Char)=>d=='.' || d.isDigit) => (Some(ConstFloatExpr(i.toFloat)),more)
+              case _ => (None,l)
+    }
   }
 }
