@@ -35,9 +35,9 @@ object Parsing {
   case class NumToken(s : String) extends Token
   case class StrToken(s : String) extends Token
 
-  def fold(str:List[Char], f:(Char) => Boolean) : Boolean = {
+  def fold(str:List[Char], y:(Char) => Boolean) : Boolean = {
     val result = str.foldLeft(true){
-      case(r,y) => { f(y) && r }
+      case(f,l) => y(l) && f
     }
     result
   }
@@ -183,13 +183,13 @@ object Parsing {
   }
 
   def parseConst(l : List[Token]) : (Option[Expr],List[Token]) = {
-    l match{
-        case KeywordToken("true")::more=>(Some(ConstBoolExpr(true)),more)
-         case KeywordToken("false")::more=>(Some(ConstBoolExpr(false)),more)
+    l match{       
           case StrToken(s)::more=>(Some(ConstStringExpr(s)),more)
            case NumToken(i)::more if fold(i.toList, (d:Char)=>d.isDigit) => (Some(ConstIntExpr(i.toInt)),more)
-           case NumToken(i)::more if fold(i.toList, (d:Char)=>d=='.' || d.isDigit) => (Some(ConstFloatExpr(i.toFloat)),more)
-              case _ => (None,l)
+            case NumToken(i)::more if fold(i.toList, (d:Char)=>d=='.' || d.isDigit) => (Some(ConstFloatExpr(i.toFloat)),more)
+             case KeywordToken("true")::more=>(Some(ConstBoolExpr(true)),more)
+              case KeywordToken("false")::more=>(Some(ConstBoolExpr(false)),more)
+               case _ => (None,l)
     }
   }
 }
